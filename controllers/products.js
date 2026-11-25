@@ -1,4 +1,4 @@
-const products = [];
+const Product = require("../models/product.js");
 
 exports.getProductPage = (req, res, next) => {
   // res.sendFile(path.join(rootDir, 'views', 'add-products.html'));
@@ -10,20 +10,21 @@ exports.getProductPage = (req, res, next) => {
 };
 
 exports.postProduct = (req, res, next) => {
-  products.push({ title: req.body.title });
+  const product = new Product(req.body.title);
+  product.save();
 
   res.redirect("/");
 };
 
 exports.getProducts = (req, res, next) => {
-  const products = adminData.products;
-
-  res.render("shop", {
-    products: products,
-    title: "Shop",
-    path: "/",
-    hasProducts: products.length > 0,
-    activeShop: true,
-    productCSS: true,
+  const products = Product.fetchAll((products) => {
+    res.render("shop", {
+      products: products,
+      title: "Shop",
+      path: "/",
+      hasProducts: products.length > 0,
+      activeShop: true,
+      productCSS: true,
+    });
   });
 };
