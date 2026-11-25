@@ -5,10 +5,13 @@ const path = require('path')
 const rootDir = require('./utils/path.js')
 
 
-const adminRoutes = require("./routes/admin.js");
+const adminData = require("./routes/admin.js");
 const shopRoutes = require("./routes/shop.js");
 
 const app = express();
+
+app.set('view engine', 'ejs'); // plug
+app.set('views', 'views'); // where to find
 
 // app.use(bodyParser.urlencoded()); // old way
 app.use(express.urlencoded({ extended: false}))
@@ -18,11 +21,13 @@ app.use(express.static(path.join(rootDir , 'public')))
 
 // app.use(adminRoutes, shopRoutes);
 
-app.use("/admin",adminRoutes);
+app.use("/admin",adminData.routes);
 app.use(shopRoutes)
 
 app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(rootDir, 'views', '404.html'))
+    // res.status(404).sendFile(path.join(rootDir, 'views', '404.html'))
+
+    res.render('404', {title: '404'})
 })
 
 // app.use("/{*splat}", (req, res, next) => {
