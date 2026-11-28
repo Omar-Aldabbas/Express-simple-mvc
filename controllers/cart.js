@@ -1,19 +1,15 @@
-const { cartClass } = require("../models/cart.js");
+const { Cart } = require("../models/cart.js");
 const productClass = require("../models/product.js");
 
 exports.getCartPage = (req, res) => {
-  let cp;
-  cartClass.fetchAll((products) => {
-    cp = products;
-    res.render("shop/cart", { title: "Cart Page", path: "/cart", cp });
+  Cart.fetchAll((cart) => {
+    res.render("shop/cart", { title: "Cart Page", path: "/cart", cart });
   });
 };
 
 exports.getCartProducts = (req, res) => {
-  cartClass.fetchAll((products) => {
-    let cp = products;
-
-    res.status(200).send(cp);
+  Cart.fetchAll((cart) => {
+    res.status(200).send(cart);
   });
 };
 
@@ -25,7 +21,7 @@ exports.postCartProduct = (req, res) => {
 
   productClass.getById(req.body.productId, (product) => {
     if (!product) return res.status(404).end();
-    cartClass.addToCart(product, (err) => {
+    Cart.addToCart(product, (err) => {
       if (err) return res.status(500).end();
 
       res.redirect("/cart");
@@ -41,7 +37,7 @@ exports.deleteCartProduct = (req, res) => {
 
 
 
-  cartClass.removeFromCart(req.body.productId, (err) => {
+  Cart.removeFromCart(req.body.productId, (err) => {
     if (err) return res.status(500).end();
 
     res.redirect("/cart");

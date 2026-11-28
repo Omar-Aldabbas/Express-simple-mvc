@@ -5,29 +5,30 @@ const rootDir = require("../utils/path");
 const p = path.join(rootDir, "data", "cart.json");
 
 function getCartFromFile(cb) {
-  let products;
+  let cart = { products: [], totalPrice: 0 };
   fs.readFile(p, (err, data) => {
     if (err) {
-      cb([]);
+      cb(cart);
       return;
     }
 
     try {
-      products = JSON.parse(data);
+      cart = JSON.parse(data);
     } catch {
-      cb([]);
+      cb(cart);
       return;
     }
 
-    if (!Array.isArray(products)) {
-      cb([]);
+    if (cart === null || !Array.isArray(cart.products)) {
+      cb({ products: [], totalPrice: 0 });
       return;
     }
-    cb(products);
+
+    cb(cart);
   });
 }
 
-class cart {
+class Cart {
   constructor() {}
 
   static fetchAll(cb) {
@@ -35,17 +36,34 @@ class cart {
   }
 
   static addToCart(product, cb) {
-    getCartFromFile((cp) => {
-      cp.push(product);
-      fs.writeFile(p, JSON.stringify(cp), (err) => {
+    getCartFromFile((cart) => {
+      const selected = cart.products.find((p) => p.id === product.id);
+      let updatedProduct;
+      if (selected) {
+        selected.quantity += 1;
+      } else {
+        updatedProduct = { ...product, quantity: 1 };
+        cart.products.push(updatedProduct);
+      }
+
+      cart.totalPrice += parseFloat(product.price);
+      fs.writeFile(p, JSON.stringify(cart), (err) => {
         cb(err);
       });
     });
   }
 
   static removeFromCart(id, cb) {
-    getCartFromFile((cp) => {
-      fs.writeFile(p, JSON.stringify(cp.filter((p) => p.id !== id)), (err) => {
+    getCartFromFile((cart) => {
+      const newproducts = cart.products.filter((p) => p.id !== id);
+      const total = newproducts.reduce(
+        (acc, next) => acc + next.quantity * parseFloat(next.price),
+        0,
+      );
+
+      const newCart = { products: newproducts, totalPrice: total };
+
+      fs.writeFile(p, JSON.stringify(newCart), (err) => {
         cb(err);
       });
     });
@@ -53,5 +71,5 @@ class cart {
 }
 
 module.exports = {
-  cartClass: cart,
+  Cart: Cart,
 };

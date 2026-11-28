@@ -6,9 +6,9 @@
     
     <main>
         <div class="cart-title">My Cart</div>
-        <% if(cp.length > 0) {%>
+        <% if(cart.products.length > 0) {%>
         <div class="cart-grid">
-        <% for( let product of cp ) {%>
+        <% for( let product of cart.products ) {%>
             <div class="cart-card">
                 <h3 class="cart-card__title"><%= product.title %></h3>
                 <div class="cart-card__image">
@@ -16,15 +16,17 @@
                         alt="A Book">
                     </div>
                 <h4 class="cart-card__price"><%= product.price %></h4>
+                <h4>Quantity: <%= product.quantity %></h4>
                 <p class="cart-card__description"><%= product.description %></p>
                 <form action="/cart/delete" method="POST">
                     <input type="hidden" name="productId" value="<%= product.id %>">
                     <button class="cart-card__delete-btn">Remove From Cart</button>
                 </form>
             </div>
-            
             <%}%>
         </div>
+            <h5><%= cart.totalPrice%></h5>
+
         <div class="checkout-section"><a href="shop/checkout">Checkout</a></div>
         <% } else {%>
             <h2 class="empty">no Products in your cart yet</h2>
