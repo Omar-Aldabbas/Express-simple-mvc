@@ -47,6 +47,24 @@ class Product {
       cb(product);
     });
   }
+
+  static update(product, cb) {
+    getProductsFromFile((products) => {
+        const existingProduct = products.find(p=> p.id === product.id);
+        if(!existingProduct) {
+            cb();
+        }
+
+        Object.assign(existingProduct, product);
+
+        fs.writeFile(p, JSON.stringify(products), (err) => {
+            cb(err);
+        })
+    })
+
+}
+
+
 }
 
 module.exports = Product;

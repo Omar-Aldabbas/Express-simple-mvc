@@ -3,9 +3,11 @@ const Product = require("../models/product.js");
 exports.getProductPage = (req, res, next) => {
   // res.sendFile(path.join(rootDir, 'views', 'add-products.html'));
 
-  res.render("admin/add-product", {
+  res.render("admin/edit-product", {
     title: "Add Products Page",
     path: "/admin/add-products",
+    editing: false,
+    product: {},
   });
 };
 
@@ -30,6 +32,7 @@ exports.getProducts = (req, res, next) => {
       hasProducts: products.length > 0,
       activeShop: true,
       productCSS: true,
+
     });
   });
 };
@@ -77,7 +80,40 @@ exports.getProductDetailsPage = (req, res, next) => {
   if (!id) return res.status(400).end();
 
   Product.getById(id, (product) => {
-    if(!product) return res.status(400).end();
-    res.render("shop/product-detail", { title: product.title, path:'/products', product });
+    if (!product) return res.status(400).end();
+    res.render("shop/product-detail", {
+      title: product.title,
+      path: "/products",
+      product,
+    });
   });
 };
+
+exports.getEditProductPage = (req, res, next) => {
+  const id = req.params.id;
+  const editMode = Boolean(req.query.edit);
+
+  if (!editMode) {
+    res.redirect("/");
+    return;
+  }
+
+  Product.getById(id, (product) => {
+    if(!product) return res.status(404).end();
+
+    res.render("admin/edit-product", {
+      title: "Edit ",
+      path: "/admin/edit-products",
+      editing: editMode,
+      product: product
+    });
+  });
+};
+
+exports.updateProduct = (req, res, next) => {
+    if(!req.body.id) return res.status(400).end();
+    console.log(req.body)
+    Product.update(req.body, () => {
+        res.status(201).redirect(`/products/${req.body.id}`)
+    })
+}

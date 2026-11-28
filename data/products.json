@@ -1,17 +1,1 @@
-[
-  {
-    "id": "926aa700-845c-4cd1-b47e-4ba27a0e1530",
-    "title": "Atomic happets",
-    "price": "19.99",
-    "description": "The first book in our collection tat you will need to build and understand habits ",
-    "imageUrl": "https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg"
-  },
-  {
-    "id": "cd85b1bc-870d-4568-a1bc-2a694cfd0c2a",
-    "title": "The Psychology of Money",
-    "price": "24.99",
-    "description": "know psychology to know how to get money",
-    "imageUrl": "https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg",
-    "createdOn": "2026-11-28T11:01:18.865Z"
-  }
-]
+[{"id":"926aa700-845c-4cd1-b47e-4ba27a0e1530","title":"  Atomic happets    ","price":"190.99","description":"  The first book in our collection tat you will need to build and understand habits   ","imageUrl":"  https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg    "},{"id":"cd85b1bc-870d-4568-a1bc-2a694cfd0c2a","title":"The Psychology of Money","price":"24.99","description":"know psychology to know how to get money","imageUrl":"https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg","createdOn":"2026-11-28T11:01:18.865Z"}]
