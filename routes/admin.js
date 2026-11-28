@@ -9,6 +9,6 @@ router.get("/add-products", productsController.getProductPage);
 
 router.post("/add-products", productsController.postProduct);
 
-// router.get('/products')
+router.get('/products', productsController.getAdminProducts)
 
 module.exports = router;

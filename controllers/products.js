@@ -56,3 +56,17 @@ exports.getIndex = (req, res) => {
     });
   });
 };
+
+
+exports.getAdminProducts = (req, res, next) => {
+  const products = Product.fetchAll((products) => {
+    res.render("admin/product-list", {
+      products,
+      title: "Admin Products",
+      path: "/admin/products",
+      hasProducts: products.length > 0,
+      activeShop: true,
+      productCSS: true,
+    });
+  });
+};
