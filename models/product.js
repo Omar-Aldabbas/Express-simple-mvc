@@ -50,21 +50,31 @@ class Product {
 
   static update(product, cb) {
     getProductsFromFile((products) => {
-        const existingProduct = products.find(p=> p.id === product.id);
-        if(!existingProduct) {
-            cb();
-        }
+      const existingProduct = products.find((p) => p.id === product.id);
+      if (!existingProduct || existingProduct.id !== product.id ) {
+        cb();
+        return;
+    }
 
-        Object.assign(existingProduct, product);
+      Object.assign(existingProduct, product);
 
-        fs.writeFile(p, JSON.stringify(products), (err) => {
-            cb(err);
-        })
-    })
+      fs.writeFile(p, JSON.stringify(products), (err) => {
+        cb(err);
+      });
+    });
+  }
 
-}
-
-
+  static delete(id, cb) {
+    getProductsFromFile((products) => {
+      const existingProductIndex = products.findIndex(
+        p=> p.id === id);
+      if (existingProductIndex < 0) return cb();
+      products.splice(existingProductIndex, 1);
+      fs.writeFile(p, JSON.stringify(products), (err) => {
+        cb(err);
+      });
+    });
+  }
 }
 
 module.exports = Product;

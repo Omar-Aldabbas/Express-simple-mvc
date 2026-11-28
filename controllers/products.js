@@ -117,3 +117,11 @@ exports.updateProduct = (req, res, next) => {
         res.status(201).redirect(`/products/${req.body.id}`)
     })
 }
+
+exports.deleteProduct = (req, res, next) => {
+    if(!req.body.id) return res.status(400).end();
+
+    Product.delete(req.body.id, () => {
+        res.redirect('/admin/products')
+    })
+}

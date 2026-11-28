@@ -55,15 +55,26 @@ class Cart {
 
   static removeFromCart(id, cb) {
     getCartFromFile((cart) => {
-      const newproducts = cart.products.filter((p) => p.id !== id);
-      const total = newproducts.reduce(
-        (acc, next) => acc + next.quantity * parseFloat(next.price),
-        0,
-      );
+      const updatedCart = { ...cart };
+      const deletedProduct = updatedCart.products.find((p) => p.id === id);
+        if(!deletedProduct) return cb();
 
-      const newCart = { products: newproducts, totalPrice: total };
+      const productIndex = updatedCart.products.findIndex((p) => p.id === id);
+      if (deletedProduct.quantity < 1) return cb();
 
-      fs.writeFile(p, JSON.stringify(newCart), (err) => {
+      if (deletedProduct.quantity == 1) {
+        updatedCart.products.splice(productIndex, 1);
+      }
+
+      if (deletedProduct.quantity > 1) {
+        deletedProduct.quantity -= 1;
+      }
+
+      updatedCart.totalPrice =
+        updatedCart.totalPrice - deletedProduct.price;
+
+
+      fs.writeFile(p, JSON.stringify(updatedCart), (err) => {
         cb(err);
       });
     });
