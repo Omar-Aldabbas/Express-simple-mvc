@@ -19,11 +19,12 @@ const getProductsFromFile = (cb) => {
 };
 
 class Product {
-  constructor({ title, price, description }) {
+  constructor({ title, price, description, imageUrl = '' }) {
     this.id = generateId();
     this.title = title;
     this.price = price;
     this.description = description;
+    this.imageUrl = imageUrl
   }
 
   save() {
