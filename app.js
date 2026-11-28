@@ -7,6 +7,7 @@ const rootDir = require("./utils/path.js");
 const adminRoutes = require("./routes/admin.js");
 const shopRoutes = require("./routes/shop.js");
 const notFoundRoutes = require("./routes/404.js");
+const cartRoutes = require('./routes/cart.js')
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.static(path.join(rootDir, "public")));
 // app.use(adminRoutes, shopRoutes);
 
 app.use("/admin", adminRoutes);
+app.use("/cart", cartRoutes);
 app.use(shopRoutes);
 
 app.use(notFoundRoutes);

@@ -93,7 +93,8 @@
     font-weight: 650;
 }
 
-.form-control input {
+.form-control input,
+.form-control textarea {
     display: block;
     width: 100%;
     min-height: 2.9rem;
@@ -105,7 +106,8 @@
     font: inherit;
 }
 
-.form-control input:focus-visible {
+.form-control input:focus-visible,
+.form-control textarea:focus-visible {
     border-color: var(--brand);
     outline: 3px solid rgb(166 79 53 / 18%);
 }

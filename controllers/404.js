@@ -1,3 +1,3 @@
 exports.get404Page = (req, res, next) => {
-  res.render("404", { title: "404" });
+  res.render("404", { title: "404", path: '/404' });
 };

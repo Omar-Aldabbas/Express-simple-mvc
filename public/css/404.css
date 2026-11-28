@@ -1,0 +1,54 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+[class="404__title"] {
+  margin: 0 0 1.5rem;
+  color: var(--ink);
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+[class="404__title"]::before {
+  content: "404";
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--brand);
+  font-size: clamp(6rem, 15vw, 11rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.07em;
+}
+
+[class="404__btn"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.85rem 1.75rem;
+  background: var(--brand);
+  color: var(--surface);
+  border: 1px solid var(--brand);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 160ms ease;
+}
+
+[class="404__btn"]:hover {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
+
+[class="404__btn"]:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 4px;
+}
